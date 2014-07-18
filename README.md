@@ -20,12 +20,12 @@ or
 agl "some longer string"
 ```
 
-Using 'vim' instead of 'less'
+Using vim instead of less
 -----------------------------
 
-If the script is named 'agv' it will use 'vim' instead of 'less' to open the file results.
+If the script is named 'agv' it will use vim instead of less to open the file results.
 
-The intended way to use this is to create a symlink from agl to agv:
+The intended way to use this feature is to create a symlink from agl to agv:
 ```
 % ln -s agl agv
 ```
