@@ -7,6 +7,17 @@ Uses 'ag' to search given files, opens matches with 'less'
 
 This script uses ag to 1) find a list of files matching the given pattern, and then 2) passes that list into 'less' with the search pattern applied. You can then navigate the results using less (e.g. n,N,:n,:p commands).
 
+At it's simplest you can just use it with a search string. agl will open all the matching files in less:
+
+```
+agl somestring
+```
+or 
+```
+agl "some longer string"
+```
+
+
 From the help:
 
 ```
