@@ -2,8 +2,10 @@ agl
 ===
 
 Helper script for the_silver_surfer (https://github.com/ggreer/the_silver_searcher).
-Uses 'ag' to search given files, opens matches with less
 
+Uses 'ag' to search given files, opens matches with 'less'
+
+This script uses ag to 1) find a list of files matching the given pattern, and then 2) passes that list into 'less' with the search pattern applied. You can then navigate the results using less (e.g. n,N,:n,:p commands).
 
 From the help:
 
