@@ -42,7 +42,7 @@ From the help:
 ```
 % agl -h
 
-Uses 'ag' to search given files, opens matches with less
+Uses 'ag' to search given files, opens matches with 'less'
 
 Usage: agl [-h] ['ag' arguments]
 
@@ -52,6 +52,8 @@ Usage: agl [-h] ['ag' arguments]
                 Note: any multi-field [OPTIONS] need to be quoted (eg "--ignore PATTERN" or "-G PATTERN")
 
 Examples:
+agl somestring
+agl "some longer string"
 agl --java SomeClass
 agl --xml '<artifact'
 agl --java -i someclass
