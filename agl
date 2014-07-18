@@ -1,26 +1,34 @@
 #!/bin/bash
 # Helper for the_silver_surfer, ag.
-# Uses 'ag' to search given files, opens matches with less
+# Uses 'ag' to search given files, opens matches with ${CMD}
 #
 
 DEBUG=
+SCRIPTNAME=$(basename $0)
+CMD=less
+if [ "${SCRIPTNAME}" = "agv" ]; then
+  CMD=vim
+fi
 
 help()
 {
-  scriptname=$(basename $0)
-  printf "Uses 'ag' to search given files, opens matches with less\n"
-  printf "\nUsage: ${scriptname} [-h] ['ag' arguments]\n"
+  printf "Uses 'ag' to search given files, opens matches with '${CMD}'\n"
+  printf "\nUsage: ${SCRIPTNAME} [-h] ['ag' arguments]\n"
   printf "\n['ag' arguments] :\n\t\tA set of arguments to ag, including the search expression\n"
   printf "\t\te.g. [FILE-TYPE] [OPTIONS] PATTERN [PATH]\n"
   printf "\t\tNote: any multi-field [OPTIONS] need to be quoted (eg \"--ignore PATTERN\" or \"-G PATTERN\")\n"
   printf "\nExamples:\n"
-  printf "${scriptname} --java SomeClass\n"
-  printf "${scriptname} --xml '<artifact'\n"
-  printf "${scriptname} --java -i someclass\n"
-  printf "\tNote: arguments are not passed into less, so in this case\n\tyou would need to immediately use '-i' command in less.\n"
-  printf "${scriptname} \"-G '.log'\" \"some string\"\n"
+  printf "${SCRIPTNAME} somestring\n"
+  printf "${SCRIPTNAME} \"some longer string\"\n"
+  printf "${SCRIPTNAME} --java SomeClass\n"
+  printf "${SCRIPTNAME} --xml '<artifact'\n"
+  if [ "${CMD}" = "less" ]; then
+    printf "${SCRIPTNAME} --java -i someclass\n"
+    printf "\tNote: arguments are not passed into ${CMD}, so in this case\n\tyou would need to immediately use '-i' command in ${CMD}.\n"
+  fi
+  printf "${SCRIPTNAME} \"-G '.log'\" \"some string\"\n"
   printf "\tNote: the -G option needs to be quoted so as to be treated as a single ag option.\n"
-  printf "${scriptname} \"--ignore '*.log'\" \"some string\"\n"
+  printf "${SCRIPTNAME} \"--ignore '*.log'\" \"some string\"\n"
   printf "\tNote: the --ignore option needs to be quoted so as to be treated as a single ag option.\n"
   exit 1
 }
@@ -69,4 +77,4 @@ if [ -z "${ag_match}" ]; then
   exit 0
 fi
 printf "Files:\n$ag_match\n"
-less +/"$search_arg" ${ag_match}
+$CMD +/"$search_arg" ${ag_match}
