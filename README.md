@@ -12,7 +12,7 @@ From the help:
 
 Uses 'ag' to search given files, opens matches with less
 
-Usage: /home/kmacleod/bin/agl [-h] <'ag' arguments>
+Usage: agl [-h] <'ag' arguments>
 
 Examples:
 agl --java SomeClass
