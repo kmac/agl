@@ -1,0 +1,45 @@
+#!/bin/bash
+# Helper for the_silver_surfer.
+# Uses 'ag' to search given files, opens matches with less
+#
+
+help()
+{
+  scriptname=$(basename $0)
+  printf "Uses 'ag' to search given files, opens matches with less\n"
+  printf "\nUsage: $0 [-h] <'ag' arguments>\n"
+  printf "\nExamples:\n"
+  printf "${scriptname} --java SomeClass\n"
+  printf "${scriptname} --xml '<artifact'\n"
+  printf "${scriptname} --java -i someclass\n"
+  printf "\tNote: arguments are not passed into less, so in this case\n\tyou would need to immediately use '-i' command in less.\n"
+  exit 1
+}
+
+if [ $# -le 0 ] ; then
+  echo "incorrect arguments (-h|--help for help)"
+  help
+fi
+
+foundarg=
+ag_args=""
+while [ -z "$foundarg" ]; do
+  case "$1" in
+  -h|--help)
+    help
+    ;;
+  -*)
+    ag_args="$arg_args $1"
+    shift
+    ;;
+  *)
+    foundarg=0
+    ;;
+  esac
+done
+
+search_arg="$1"
+ag_match=$(ag --nocolor -l $ag_args "$@")
+printf "Files:\n$ag_match\n"
+#printf "less +/$search_arg ${ag_match}\n"
+less +/$search_arg ${ag_match}
