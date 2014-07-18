@@ -1,19 +1,35 @@
 #!/bin/bash
-# Helper for the_silver_surfer.
+# Helper for the_silver_surfer, ag.
 # Uses 'ag' to search given files, opens matches with less
 #
+
+DEBUG=
 
 help()
 {
   scriptname=$(basename $0)
   printf "Uses 'ag' to search given files, opens matches with less\n"
-  printf "\nUsage: ${scriptname} [-h] <'ag' arguments>\n"
+  printf "\nUsage: ${scriptname} [-h] ['ag' arguments]\n"
+  printf "\n['ag' arguments] :\n\t\tA set of arguments to ag, including the search expression\n"
+  printf "\t\te.g. [FILE-TYPE] [OPTIONS] PATTERN [PATH]\n"
+  printf "\t\tNote: any multi-field [OPTIONS] need to be quoted (eg \"--ignore PATTERN\" or \"-G PATTERN\")\n"
   printf "\nExamples:\n"
   printf "${scriptname} --java SomeClass\n"
   printf "${scriptname} --xml '<artifact'\n"
   printf "${scriptname} --java -i someclass\n"
   printf "\tNote: arguments are not passed into less, so in this case\n\tyou would need to immediately use '-i' command in less.\n"
+  printf "${scriptname} \"-G '.log'\" \"some string\"\n"
+  printf "\tNote: the -G option needs to be quoted so as to be treated as a single ag option.\n"
+  printf "${scriptname} \"--ignore '*.log'\" \"some string\"\n"
+  printf "\tNote: the --ignore option needs to be quoted so as to be treated as a single ag option.\n"
   exit 1
+}
+
+log_debug()
+{
+  if [ ! -z "$DEBUG" ]; then
+    printf "$*\n"
+  fi
 }
 
 if [ $# -le 0 ] ; then
@@ -21,15 +37,19 @@ if [ $# -le 0 ] ; then
   help
 fi
 
-foundarg=
+foundarg=1
 ag_args=""
-while [ -z "$foundarg" ]; do
+while [ $foundarg -ne 0 ]; do
   case "$1" in
   -h|--help)
     help
     ;;
+  -D)
+    DEBUG=true
+    shift
+    ;;
   -*)
-    ag_args="$arg_args $1"
+    ag_args="$ag_args $1"
     shift
     ;;
   *)
@@ -39,7 +59,14 @@ while [ -z "$foundarg" ]; do
 done
 
 search_arg="$1"
-ag_match=$(ag --nocolor -l $ag_args "$@")
+log_debug "ag_args:$ag_args"
+log_debug "search_arg:$search_arg"
+
+ag_match=$(eval ag --nocolor -l $ag_args \"$@\")
+log_debug "ag_match:$ag_match"
+if [ -z "${ag_match}" ]; then
+  printf "No matching files.\n"
+  exit 0
+fi
 printf "Files:\n$ag_match\n"
-#printf "less +/$search_arg ${ag_match}\n"
-less +/$search_arg ${ag_match}
+less +/"$search_arg" ${ag_match}
