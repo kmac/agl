@@ -7,7 +7,7 @@ help()
 {
   scriptname=$(basename $0)
   printf "Uses 'ag' to search given files, opens matches with less\n"
-  printf "\nUsage: $0 [-h] <'ag' arguments>\n"
+  printf "\nUsage: ${scriptname} [-h] <'ag' arguments>\n"
   printf "\nExamples:\n"
   printf "${scriptname} --java SomeClass\n"
   printf "${scriptname} --xml '<artifact'\n"
