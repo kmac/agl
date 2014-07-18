@@ -3,10 +3,12 @@ agl / agv
 
 Helper script for the_silver_surfer (https://github.com/ggreer/the_silver_searcher).
 
-Uses 'ag' to search given files, opens matches with 'less'.
+Uses 'ag' to search given files, then opens matches with either 'less' or 'vim'.
 
-This script uses ag to 1) find a list of files matching the given pattern, and then 2) passes that list into 'less' with the search pattern applied. You can then navigate the results using less (e.g. n,N,:n,:p commands).
+This script uses 'ag' to 
 
+1. Find a list of files matching the given pattern, and then 
+2. Passes that list into 'less' with the search pattern applied. You can then navigate the results using less (e.g. n,N,:n,:p commands).
 
 At it's simplest you can just use it with a search string. agl will open all the matching files in less:
 
