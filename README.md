@@ -1,7 +1,8 @@
 agl
 ===
 
-Helper script for the_silver_surfer. Uses 'ag' to search given files, opens matches with less
+Helper script for the_silver_surfer (https://github.com/ggreer/the_silver_searcher).
+Uses 'ag' to search given files, opens matches with less
 
 
 From the help:
