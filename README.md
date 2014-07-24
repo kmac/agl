@@ -20,6 +20,13 @@ or
 agl "some longer string"
 ```
 
+You can also feed in some of ag's options:
+
+```
+agl --python some_function
+```
+
+
 Using vim instead of less
 -----------------------------
 
